@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Cadastro.css";
 
-export default function Cadastro({ contacts, setContacts }) {
+function Cadastro({ contacts, setContacts }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -34,3 +34,5 @@ export default function Cadastro({ contacts, setContacts }) {
     </div>
   );
 }
+
+export default Cadastro;

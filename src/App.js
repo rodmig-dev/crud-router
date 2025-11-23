@@ -1,25 +1,80 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+//importação dos componentes 'pages'
+import Login from "./pages/Login/Login";
+import Cadastro from "./pages/Cadastro/Cadastro";
+import Lista from "./pages/Lista/Lista";
+import Home from "./pages/Home/Home";
+
+import Navbar from "./components/Navbar";
 
 function App() {
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [contacts, setContacts] = useState([]);
+
+  //funçãomde autenticação
+  const handleLogin = (username, password) => {
+    if (username === "admin" && password === "123") {
+      setAuthenticated(true);
+    } else {
+      alert("Usuário ou senha inválidos!");
+    }
+  };
+
+  const handleLogout = () => {
+    setAuthenticated(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {isAuthenticated && <Navbar onLogout={handleLogout} />}
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
+        />
+
+        <Route
+          path="/"
+          element={isAuthenticated ? <Home /> : <Navigate to="login" />}
+        />
+
+        <Route
+          path="/cadastro"
+          element={
+            isAuthenticated ? (
+              <Cadastro contacts={contacts} setContacts={setContacts} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        <Route
+          path="/lista"
+          element={
+            isAuthenticated ? (
+              <Lista contacts={contacts} setContacts={setContacts} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
   );
 }
-
 export default App;

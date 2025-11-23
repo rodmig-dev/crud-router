@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Lista.css";
 
-export default function Lista({ contacts, setContacts }) {
+function Lista({ contacts, setContacts }) {
   const [editingId, setEditingId] = useState(null);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
@@ -10,7 +10,7 @@ export default function Lista({ contacts, setContacts }) {
     setContacts(contacts.filter((c) => c.id !== id));
   };
 
-  const handelEdit = (contact) => {
+  const handleEdit = (contact) => {
     setEditingId(contact.id);
     setNewName(contact.name);
     setNewPhone(contact.phone);
@@ -29,7 +29,7 @@ export default function Lista({ contacts, setContacts }) {
     <div className="lista-container">
       <h2>Lista de Contatos</h2>
       {contacts.length === 0 ? (
-        <p>Nenhum contato cadastrado</p>
+        <p>Nenhum contato cadastrado.</p>
       ) : (
         <ul>
           {contacts.map((contact) => (
@@ -53,7 +53,7 @@ export default function Lista({ contacts, setContacts }) {
                   <span>
                     {contact.name} - {contact.phone}
                   </span>
-                  <button onClick={() => handelEdit(contact)}>Editar</button>
+                  <button onClick={() => handleEdit(contact)}>Editar</button>
                   <button onClick={() => handleDelete(contact.id)}>
                     Excluir
                   </button>
@@ -66,3 +66,5 @@ export default function Lista({ contacts, setContacts }) {
     </div>
   );
 }
+
+export default Lista;

@@ -1,7 +1,7 @@
-import { link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar({ logout }) {
+function Navbar({ onLogout }) {
   return (
     <nav className="navbar">
       <h2>Agenda</h2>
